@@ -1,4 +1,4 @@
-#include "Person.h"
+#include "User.h"
 #include <jni.h>
 #include <string>
 #include <android/log.h>
@@ -36,7 +36,7 @@ extern "C"
 JNIEXPORT jlong JNICALL
 Java_com_jp_jnitest_UserBean_createNativeObject(JNIEnv *env, jobject obj) {
     jlong result;
-    result = (jlong) new Person();
+    result = (jlong) new User();
     return result;
 }
 
@@ -44,20 +44,20 @@ extern "C"
 JNIEXPORT void JNICALL
 Java_com_jp_jnitest_UserBean_setAge__JI(JNIEnv *env, jobject obj, jlong addr, jint age) {
     //对象指针调用方法
-    ((Person *) addr)->setAge(age + 20);
+    ((User *) addr)->setAge(age + 20);
 }
 
 extern "C"
 JNIEXPORT jint JNICALL
 Java_com_jp_jnitest_UserBean_getAge__J(JNIEnv *env, jobject obj, jlong addr) {
-    return ((Person *) addr)->getAge();
+    return ((User *) addr)->getAge();
 }
 
 extern "C"
 JNIEXPORT jstring JNICALL
 Java_com_jp_jnitest_UserBean_getUsername(JNIEnv *env, jobject instance, jlong addr) {
-    char* nickname = ((Person *) addr)->getNickname();//使用c
-    std::string username = ((Person *) addr)->getUsername();//使用c++
+    char* nickname = ((User *) addr)->getNickname();//使用c
+    std::string username = ((User *) addr)->getUsername();//使用c++
     char* chardata = (char*)username.c_str();
     // char* 转 string
     jstring jstr = chartoJstring(env, chardata);
@@ -72,55 +72,55 @@ Java_com_jp_jnitest_UserBean_setUsername(JNIEnv *env, jobject instance, jlong ad
                                          jstring username_) {
     char* username = jstringTostring(env, username_);
     std::string s = env->GetStringUTFChars(username_, NULL);
-    ((Person *) addr)->setNickname(username);
-    ((Person *) addr)->setUsername(s);
+    ((User *) addr)->setNickname(username);
+    ((User *) addr)->setUsername(s);
 }
 
 extern "C"
 JNIEXPORT void JNICALL
 Java_com_jp_jnitest_UserBean_setIncome(JNIEnv *env, jobject instance, jlong addr, jlong age) {
     //对象指针调用方法
-    ((Person *) addr)->setIncome(age + 20);
+    ((User *) addr)->setIncome(age + 20);
 }
 
 extern "C"
 JNIEXPORT jint JNICALL
 Java_com_jp_jnitest_UserBean_getIncome(JNIEnv *env, jobject instance, jlong addr) {
-    return ((Person *) addr)->getIncome();
+    return ((User *) addr)->getIncome();
 }
 
-int Person::getAge() {
+int User::getAge() {
     return this->age;
 }
 
-void Person::setAge(int age) {
+void User::setAge(int age) {
     this->age = age;
 }
 
-Person::Person() {
+User::User() {
 
 }
 
-std::string Person::getUsername() {
+std::string User::getUsername() {
     return this->username;
 }
 
-void Person::setUsername(std::string username) {
+void User::setUsername(std::string username) {
     this->username = username;
 }
 
-long Person::getIncome() const {
+long User::getIncome() const {
     return income;
 }
 
-void Person::setIncome(long income) {
-    Person::income = income;
+void User::setIncome(long income) {
+    User::income = income;
 }
 
-char *Person::getNickname() const {
+char *User::getNickname() const {
     return nickname;
 }
 
-void Person::setNickname(char *nickname) {
+void User::setNickname(char *nickname) {
     this->nickname = nickname;
 }

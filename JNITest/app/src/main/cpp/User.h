@@ -4,14 +4,14 @@
 #include <jni.h>
 #include <string>
 
-class Person {
+class User {
 private:
     int age;
     std::string username;
     char *nickname;
     long income;
 public:
-    Person();
+    User();
     int getAge();
     void setAge(int age);
 
